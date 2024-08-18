@@ -1,6 +1,10 @@
 package gochartjs
 
-import "github.com/goccy/go-json"
+import (
+	"regexp"
+
+	"github.com/goccy/go-json"
+)
 
 type ChartJs_Data struct {
 	Labels   []string          `json:"labels"`
@@ -156,8 +160,64 @@ type jsFunc struct {
 	ReturnType string `json:"returnType"` // js return type (string, int, float, bool, object, array)
 }
 
+// New creates a new ChartJs object
+func New(chartType uint8) ChartJs {
+	return ChartJs{
+		Type: chartTypes[chartType],
+		Data: ChartJs_Data{
+			Labels:   []string{},
+			Datasets: []ChartJs_Dataset{},
+		},
+		Options: ChartJs_Options{
+			Responsive: true,
+		},
+	}
+}
+
 // output as json
 func (c ChartJs) Json() string {
 	b, _ := json.Marshal(c)
 	return string(b)
+}
+
+// Chart types
+const (
+	ChartTypeBar uint8 = iota
+	ChartTypeBubble
+	ChartTypeDoughnut
+	ChartTypeLine
+	ChartTypePie
+	ChartTypePolarArea
+	ChartTypeRadar
+	ChartTypeScatter
+)
+
+var chartTypes = map[uint8]string{
+	ChartTypeBar:       "bar",
+	ChartTypeBubble:    "bubble",
+	ChartTypeDoughnut:  "doughnut",
+	ChartTypeLine:      "line",
+	ChartTypePie:       "pie",
+	ChartTypePolarArea: "polarArea",
+	ChartTypeRadar:     "radar",
+	ChartTypeScatter:   "scatter",
+}
+
+// output as js object
+func (c ChartJs) Js(elementId string) string {
+	return "new Chart(document.getElementById('myChart'), " + c.JsObj() + ")"
+}
+
+func (c ChartJs) JsObj() string {
+	inJson := c.Json()
+	// replace double quotes with no quotes on specific values to expose js functions
+	// `"(\((?P<expression>[\w]+)\)\?\s?(\'[\w, #\(\)]+\')\s?:\s?(\'[\w, #\(\)]+\');?)"`gm
+	// use this regex to find the strings
+	var re = regexp.MustCompile(`(?m)"(\((?P<expression>[\w]+)\)\?\s?(\'[\w, #\(\)]+\')\s?:\s?(\'[\w, #\(\)]+\');?)"`)
+
+	// replace the strings
+	inJson = re.ReplaceAllString(inJson, "$1")
+
+	return inJson
+
 }
