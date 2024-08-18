@@ -213,7 +213,7 @@ func (c ChartJs) JsObj() string {
 	// replace double quotes with no quotes on specific values to expose js functions
 	// `"(\((?P<expression>[\w]+)\)\?\s?(\'[\w, #\(\)]+\')\s?:\s?(\'[\w, #\(\)]+\');?)"`gm
 	// use this regex to find the strings
-	var re = regexp.MustCompile(`(?m)"(\((?P<expression>[\w]+)\)\?\s?(\'[\w, #\(\)]+\')\s?:\s?(\'[\w, #\(\)]+\');?)"`)
+	var re = regexp.MustCompile(`(?m)"(\((?P<expression>[\w]+)\)\?\s?(\'[\w, #\(\)]+\')\s?:\s?(\'[\w, #\(\)]+\'));?"`)
 
 	// replace the strings
 	inJson = re.ReplaceAllString(inJson, "$1")
