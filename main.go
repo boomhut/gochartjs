@@ -12,9 +12,9 @@ type ChartJs_Data struct {
 }
 
 type ChartJs_Dataset struct {
-	Label           string  `json:"label"`
+	Label           string  `json:"label,omitempty"`
 	Data            []int   `json:"data"`
-	Fill            bool    `json:"fill"`
+	Fill            bool    `json:"fill,omitempty"`
 	BackgroundColor string  `json:"backgroundColor,omitempty"`
 	BorderColor     string  `json:"borderColor,omitempty"`
 	BorderWidth     int     `json:"borderWidth,omitempty"`
@@ -22,9 +22,9 @@ type ChartJs_Dataset struct {
 }
 
 type ChartJs_Options struct {
-	Responsive bool                   `json:"responsive"`
-	Scales     ChartJs_Scales         `json:"scales"`
-	Plugins    ChartJs_PluginsOptions `json:"plugins"`
+	Responsive bool                   `json:"responsive,omitempty"`
+	Scales     ChartJs_Scales         `json:"scales,omitempty"`
+	Plugins    ChartJs_PluginsOptions `json:"plugins,omitempty"`
 }
 
 type ChartJs_PluginsOptions struct {
@@ -107,22 +107,22 @@ type ChartJs_Scales struct {
 }
 
 type ChartJs_Axes struct {
-	Display bool           `json:"display"`
-	Ticks   ChartJs_Ticks  `json:"ticks"`
-	Border  ChartJs_Border `json:"border"`
-	Grid    ChartJs_Grid   `json:"grid"`
+	Display bool           `json:"display,omitempty"`
+	Ticks   ChartJs_Ticks  `json:"ticks,omitempty"`
+	Border  ChartJs_Border `json:"border,omitempty"`
+	Grid    ChartJs_Grid   `json:"grid,omitempty"`
 }
 
 type ChartJs_Ticks struct {
-	BeginAtZero bool `json:"beginAtZero"`
+	BeginAtZero bool `json:"beginAtZero,omitempty"`
 }
 
 type ChartJs_Border struct {
-	Display bool `json:"display"`
+	Display bool `json:"display,omitempty"`
 }
 
 type ChartJs_Grid struct {
-	Display bool `json:"display"`
+	Display bool `json:"display,omitempty"`
 }
 
 // color
@@ -136,16 +136,16 @@ type ChartJs_Grid struct {
 // text	string		The string title.
 
 type ChartJs_Title struct {
-	Display bool   `json:"display"`
-	Font    string `json:"font"`
-	Padding int    `json:"padding"`
-	Text    string `json:"text"`
+	Display bool   `json:"display,omitempty"`
+	Font    string `json:"font,omitempty"`
+	Padding int    `json:"padding,omitempty"`
+	Text    string `json:"text,omitempty"`
 }
 
 type ChartJs struct {
 	Type    string           `json:"type"`
 	Data    ChartJs_Data     `json:"data"`
-	Options ChartJs_Options  `json:"options"`
+	Options ChartJs_Options  `json:"options,omitempty"`
 	Plugins []ChartJs_Plugin `json:"plugins,omitempty"`
 }
 
